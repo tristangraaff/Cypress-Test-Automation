@@ -1,15 +1,15 @@
-/// <reference types="Cypress" />
+/// <reference types="cypress" />
 
 describe('tasks page', () => {
   it('should render the main image', () => {
     cy.visit('http://localhost:5173/');
-    cy.get('img');
+    cy.get('.main-header img');
+    // cy.get('.main-header').find('img'); //alternative option
   });
 
-  it('should render the h1 element and show the correct expected text', () => {
+  it('should display the page title', () => {
     cy.visit('http://localhost:5173/');
-    cy.get('h1')
-      .should('be.visible')
-      .and('have.text', 'React Tasks');
+    cy.get('h1').should('have.length', 1);
+    cy.get('h1').contains('My Cypress Course Tasks');
   });
 });
