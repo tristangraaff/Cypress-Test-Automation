@@ -1,5 +1,8 @@
 /// <reference types="cypress" />
 
+const taskTitle = 'New Task';
+const taskSummary = 'A random description';
+
 describe('tasks management', () => {
     beforeEach(() => {
         cy.visit('index.html');
@@ -20,7 +23,14 @@ describe('tasks management', () => {
     });
 
     it('should create a new task', () => {
-        
+        cy.get('#title').type(taskTitle);
+        cy.get('#summary').type(taskSummary);
+        cy.get('.modal').contains('Add Task').click();
+        cy.get('.task').should('have.length', 1);
+        cy.get('.task h2').contains(taskTitle);
+        cy.get('.task p').contains(taskSummary);
+        cy.get('[data-cy=backdrop]').should('not.exist');
+        cy.get('.modal').should('not.exist');
     });
 });
 
