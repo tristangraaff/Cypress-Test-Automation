@@ -57,8 +57,8 @@ function NewTask({ onAddTask, onCancel }) {
         </p>
       )}
       <p className="actions">
-        <button type="button" onClick={onCancel}>Cancel</button>
-        <button type="submit">Add Task</button>
+        <button type="button" data-cy="cancel-button" onClick={onCancel}>Cancel</button>
+        <button type="submit" data-cy="add-task-button">Add Task</button>
       </p>
     </form>
   );
