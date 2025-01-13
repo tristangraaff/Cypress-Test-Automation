@@ -32,6 +32,16 @@ describe('tasks management', () => {
         cy.get('[data-cy=backdrop]').should('not.exist');
         cy.get('.modal').should('not.exist');
     });
+
+    it('should validate user input', () => {
+        cy.get('.modal').contains('Add Task').click();
+        cy.contains('Please provide values');
+    });
+
+    it('should filter tasks', () => {
+        cy.get('#title').type(taskTitle);
+        cy.get('#summary').type(taskSummary);
+    });
 });
 
 //TODO
