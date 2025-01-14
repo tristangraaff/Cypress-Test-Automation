@@ -3,6 +3,9 @@
 const taskTitle = 'New Task';
 const taskSummary = 'A random description';
 
+const taskTitle2 = 'New Task 2';
+const taskSummary2 = 'A random desciption 2';
+
 describe('tasks management', () => {
     beforeEach(() => {
         cy.visit('index.html');
@@ -41,8 +44,30 @@ describe('tasks management', () => {
     it('should filter tasks', () => {
         cy.get('#title').type(taskTitle);
         cy.get('#summary').type(taskSummary);
+        cy.get('#category').select('urgent');
+        cy.get('.modal').contains('Add Task').click();
+        cy.get('.task').should('have.length', 1);
+        cy.get('#filter').select('moderate');
+        cy.get('.task').should('have.length', 0);
+        cy.get('#filter').select('urgent');
+        cy.get('.task').should('have.length', 1);
+        cy.get('#filter').select('all');
+        cy.get('.task').should('have.length', 1);
+    });
+
+    it('should add multiple tasks', () => {
+        cy.get('#title').type(taskTitle);
+        cy.get('#summary').type(taskSummary);
+        cy.get('.modal').contains('Add Task').click();
+        cy.get('.task').should('have.length', 1);
+
+        cy.get('[data-cy=start-add-task-button]').click();
+        cy.get('#title').type(taskTitle2);
+        cy.get('#summary').type(taskSummary2);
+        cy.get('.modal').contains('Add Task').click();
+        cy.get('.task').should('have.length', 2);
+
+        cy.get('.task').eq(0).contains('New Task');
+        cy.get('.task').eq(1).contains('New Task 2');
     });
 });
-
-//TODO
-// -data-cy attributen toevoegen
