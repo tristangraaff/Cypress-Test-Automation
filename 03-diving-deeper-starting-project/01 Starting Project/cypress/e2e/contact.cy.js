@@ -39,6 +39,7 @@ describe('contact form', () => {
             .invoke('attr', 'class')
             .should('include', 'invalid');
 
+        cy.screenshot();
         cy.get('[data-cy="contact-input-name"]').as('nameInput');
         cy.get('@nameInput').focus().blur();
         cy.get('@nameInput')
@@ -46,11 +47,16 @@ describe('contact form', () => {
             .should('have.attr', 'class')
             .and('match', /invalid/); //alternatief op regel 37
 
-        cy.get('[data-cy="contact-input-name"]').as('emailInput');
+        cy.screenshot();
+        cy.get('[data-cy="contact-input-email"]').as('emailInput');
         cy.get('@emailInput').focus().blur();
         cy.get('@emailInput')
             .parent()
-            .invoke('attr', 'class')
-            .should('include', 'invalid');
+            //.invoke('attr', 'class')
+            //.should('include', 'invalid')
+            .should((el) => {
+                expect(el.attr('class')).not.to.be.undefined;
+                expect(el.attr('class')).to.contain('invalid');
+            });
     });
 });
