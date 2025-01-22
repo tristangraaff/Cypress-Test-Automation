@@ -13,6 +13,7 @@ describe('contact form',
   });
 
   it('should submit the form', () => {
+    cy.task('log', 'Dit wordt de terminal output.');
     cy.getByDataCy('contact-input-message').type('Hello world!');
     cy.getByDataCy('contact-input-name').type('John Doe');
     cy.getByDataCy('contact-btn-submit').then((el) => {
