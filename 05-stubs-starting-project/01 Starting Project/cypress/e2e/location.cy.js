@@ -16,7 +16,10 @@ describe('share location', () => {
 
       cy.stub(win.navigator.clipboard, 'writeText')
         .as('saveToClipboard')
-        .resolves();  
+        .resolves();
+        
+      cy.spy(win.localStorage, 'setItem').as('storeLocation');
+      cy.spy(win.localStorage, 'getItem').as('getStoredLocation');
     });
   });
 
