@@ -2,6 +2,7 @@
 
 describe('share location', () => {
   beforeEach(() => {
+    cy.clock();
     cy.fixture('user-location.json').as('userLocation');
     cy.visit('/').then(win => {
       cy.get('@userLocation').then(location => {
@@ -40,7 +41,17 @@ describe('share location', () => {
       cy.get('[data-cy="share-loc-btn"]').click();
       cy.get('@saveToClipboard').should('have.been.called');
       cy.get('@saveToClipboard').should('have.been.calledWithMatch', 
-        new RegExp(`${latitude}.*${longitude}.*${encodeURI(userName)}`));
+        new RegExp(`${latitude}.*${longitude}.*${encodeURI(userName)}`)
+      );
+
+      cy.get('@storeLocation').should('have.been.calledWithMatch',
+        /John Doe/,
+        new RegExp(`${latitude}.*${longitude}.*${encodeURI(userName)}`)
+      );
     });
+    cy.get('@getStoredLocation').should('have.been.called');
+    cy.get('[data-cy="info-message"]').should('be.visible');
+    cy.tick(2000);
+    cy.get('[data-cy="info-message"]').should('not.be.visible');
   });
 });
